@@ -8,20 +8,24 @@
 
 /* Begin PBXBuildFile section */
 		B257053D20A9DD7700214680 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B257053C20A9DD7700214680 /* AppDelegate.swift */; };
-		B257053F20A9DD7700214680 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B257053E20A9DD7700214680 /* ViewController.swift */; };
+		B257053F20A9DD7700214680 /* LinksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B257053E20A9DD7700214680 /* LinksTableViewController.swift */; };
 		B257054220A9DD7700214680 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B257054020A9DD7700214680 /* Main.storyboard */; };
 		B257054420A9DD7A00214680 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B257054320A9DD7A00214680 /* Assets.xcassets */; };
 		B257054720A9DD7A00214680 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B257054520A9DD7A00214680 /* LaunchScreen.storyboard */; };
+		B257055020A9DF7000214680 /* LinkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B257054F20A9DF7000214680 /* LinkTableViewCell.swift */; };
+		B2CEAB1D20AABAD90072019B /* LinksStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2CEAB1C20AABAD90072019B /* LinksStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		B257053920A9DD7700214680 /* PingMeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PingMeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B257053C20A9DD7700214680 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B257053E20A9DD7700214680 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B257053E20A9DD7700214680 /* LinksTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinksTableViewController.swift; sourceTree = "<group>"; };
 		B257054120A9DD7700214680 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B257054320A9DD7A00214680 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B257054620A9DD7A00214680 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B257054820A9DD7A00214680 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B257054F20A9DF7000214680 /* LinkTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkTableViewCell.swift; sourceTree = "<group>"; };
+		B2CEAB1C20AABAD90072019B /* LinksStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinksStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +58,48 @@
 		B257053B20A9DD7700214680 /* PingMeApp */ = {
 			isa = PBXGroup;
 			children = (
+				B2CEAB1E20AABAE00072019B /* Model */,
+				B257054E20A9DF4100214680 /* View */,
+				B29542FC20AAC9BD00783696 /* Controller */,
 				B257053C20A9DD7700214680 /* AppDelegate.swift */,
-				B257053E20A9DD7700214680 /* ViewController.swift */,
 				B257054020A9DD7700214680 /* Main.storyboard */,
+				B29542FD20AACC6400783696 /* Supporting Files */,
+			);
+			path = PingMeApp;
+			sourceTree = "<group>";
+		};
+		B257054E20A9DF4100214680 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B257054F20A9DF7000214680 /* LinkTableViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		B29542FC20AAC9BD00783696 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				B257053E20A9DD7700214680 /* LinksTableViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		B29542FD20AACC6400783696 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
 				B257054320A9DD7A00214680 /* Assets.xcassets */,
 				B257054520A9DD7A00214680 /* LaunchScreen.storyboard */,
 				B257054820A9DD7A00214680 /* Info.plist */,
 			);
-			path = PingMeApp;
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B2CEAB1E20AABAE00072019B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B2CEAB1C20AABAD90072019B /* LinksStore.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -135,8 +173,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B257053F20A9DD7700214680 /* ViewController.swift in Sources */,
+				B257053F20A9DD7700214680 /* LinksTableViewController.swift in Sources */,
+				B2CEAB1D20AABAD90072019B /* LinksStore.swift in Sources */,
 				B257053D20A9DD7700214680 /* AppDelegate.swift in Sources */,
+				B257055020A9DF7000214680 /* LinkTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,7 +321,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = PingMeApp/Info.plist;
+				DEVELOPMENT_TEAM = G7XAPEX3G9;
+				INFOPLIST_FILE = "$(SRCROOT)/PingMeApp/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -298,7 +340,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = PingMeApp/Info.plist;
+				DEVELOPMENT_TEAM = G7XAPEX3G9;
+				INFOPLIST_FILE = "$(SRCROOT)/PingMeApp/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
