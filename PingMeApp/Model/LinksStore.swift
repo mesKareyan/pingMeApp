@@ -7,38 +7,164 @@
 //
 
 import Foundation
+import RealmSwift
 
-class LinksStore {
+enum LinksSorting {
     
-    private (set) var links: [Link] = [
-        Link(address: "google.com"),
-        Link(address: "facebook.com"),
-        Link(address: "amzn.to")
-    ]
+    case nameAsc
+    case nameDesc
+    case statusAsc
+    case statusDesc
+    case pingTimeAsc
+    case pingTimeDesc
+    case none
     
-    func remove(link: Link) {
-        if let index = links.index(of: link) {
-            links.remove(at: index)
+    var value: String {
+        switch self {
+        case .nameAsc, .nameDesc :
+            return "address"
+        case .statusAsc, .statusDesc:
+            return "status"
+        case .pingTimeAsc, .pingTimeDesc:
+            return "ping"
+        case .none:
+            return ""
         }
     }
     
-    func add(link: Link) {
-        links.append(link)
-    }
-    
-    init() {
+    var ascending: Bool {
+        switch self {
+        case .nameAsc, .statusAsc, .pingTimeAsc :
+            return true
+        case .nameDesc, .statusDesc, .pingTimeDesc:
+            return false
+        case .none:
+            return false
+        }
     }
     
 }
 
+extension LinksSorting {
+    static prefix func !(value: LinksSorting) -> LinksSorting {
+        switch value {
+        case .nameAsc:
+            return .nameDesc
+        case .nameDesc:
+            return .nameAsc
+        case .statusAsc:
+            return .statusDesc
+        case .statusDesc:
+            return .statusAsc
+        case .pingTimeAsc:
+            return .pingTimeDesc
+        case .pingTimeDesc:
+            return .pingTimeAsc
+        case .none:
+            return .none
+        }
+    }
+}
+
+class LinksStore {
+    
+    private (set) var links: Results<Link>!
+    let realm = try! Realm()
+    
+    var searchPredicate: NSPredicate?
+    var sortBy: LinksSorting = .nameAsc
+
+    init() {
+        loadLinks()
+    }
+    
+    func loadLinks() {
+        do {
+            let realm = try Realm()
+            let isFilterEnabled = searchPredicate != nil
+            let isSortEnabled = sortBy != .none
+            self.links = objects(from: realm, filtered: isFilterEnabled , sorted: isSortEnabled)
+        } catch let error as NSError {
+            self.links = nil
+            fatalError(error.localizedDescription)
+        }
+    }
+    
+    private func objects(from realm: Realm, filtered:Bool, sorted: Bool) -> Results<Link> {
+        if filtered {
+            if sorted {
+               return realm.objects(Link.self)
+                      .filter(searchPredicate!)
+                      .sorted(byKeyPath: sortBy.value, ascending: sortBy.ascending)
+            } else {
+                return realm.objects(Link.self)
+                    .filter(searchPredicate!)
+            }
+        } else {
+            if sorted {
+               return realm.objects(Link.self)
+                    .sorted(byKeyPath: sortBy.value, ascending: sortBy.ascending)
+            } else {
+                return realm.objects(Link.self)
+            }
+        }
+    }
+    
+    func create(link address: String, index added: (Int?) ->()) {
+        do {
+            let link = Link(address: address)
+            try realm.write {
+                realm.add(link, update: true)
+                loadLinks()
+                guard let index = links.index(of: link) else {
+                    added(nil)
+                    return
+                }
+                added(index)
+            }
+        } catch let error as NSError {
+            added(nil)
+            fatalError(error.localizedDescription)
+        }
+    }
+    
+    func remove(link: Link,index removed: (Int?) ->())  {
+        guard let index = links.index(of: link) else {
+            removed(nil)
+            return
+        }
+        do {
+            try realm.write {
+                realm.delete(link)
+                removed(index)
+            }
+        } catch {
+            print(error)
+            removed(nil)
+        }
+    }
+
+    func update(ping: TimeInterval, for link: Link) {
+        try! realm.write {
+            link.pingTime = ping
+        }
+    }
+
+}
+
 class LinkChecker {
     
-    init() {}
+    init(store: LinksStore) {
+        self.linkStore = store
+    }
+    
+    let realm = try! Realm()
+    let linkStore: LinksStore!
     
     func updatePing(for link: Link, comletion: @escaping (_ success: Bool) -> ()) {
         Network.checkPing(for: link.address) { (result) in
-        let success = self.updatePingResult(for: link, with: result)
             DispatchQueue.main.async {
+                let success = self.updatePingResult(for: link, with: result)
                 comletion(success)
             }
         }
@@ -52,7 +178,7 @@ class LinkChecker {
             return false
         case .success(pingTime: let ping):
             link.status = .available
-            link.pingTime = ping
+            linkStore.update(ping: ping, for: link)
             return true
         }
     }

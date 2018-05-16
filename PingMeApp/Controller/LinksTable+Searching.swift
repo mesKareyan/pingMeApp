@@ -22,7 +22,7 @@ extension LinksTableViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         //Hide Cancel
-        isSearchingActive = false
+        searchPredicate = nil
         searchBar.setShowsCancelButton(false, animated: true)
         searchBar.resignFirstResponder()
         guard let term = searchBar.text , !term.isEmpty else {
@@ -34,7 +34,7 @@ extension LinksTableViewController: UISearchBarDelegate {
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         //Hide Cancel
-        isSearchingActive = false
+        searchPredicate = nil
         searchBar.setShowsCancelButton(false, animated: true)
         searchBar.text = String()
         searchBar.resignFirstResponder()
@@ -47,15 +47,22 @@ extension LinksTableViewController: UISearchBarDelegate {
     
     func filterLinks(with searchText: String) {
         if searchText.isEmpty {
-            isSearchingActive = false
+            searchPredicate = nil
             return
         }
-        filteredLinks = linkStore.links.filter { link in
-            link.address.lowercased().contains(searchText.lowercased())
-        }
-        isSearchingActive = true
+       searchPredicate = NSPredicate(format: "CONTAINS[c]", searchText)
     }
     
 }
+
+//MARK: - Filtering
+extension LinksTableViewController {
+    
+    func filterLinks(for predicate: NSPredicate) {
+        
+    }
+    
+}
+
 
 

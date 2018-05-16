@@ -7,32 +7,50 @@
 //
 
 import Foundation
+import RealmSwift
 
-enum LinkStatus {
+enum LinkStatus: Int {
     case available
     case unavailable
     case noInformation
 }
 
-class Link {
-    var address: String
-    var status: LinkStatus = .noInformation
-    var pingTime: TimeInterval?
+class Link: Object {
     
-    init(address: String) {
+    @objc dynamic private(set) var address: String = ""
+    @objc dynamic var pingTime: TimeInterval = 0.0
+    @objc private dynamic var _status = LinkStatus.noInformation.rawValue
+    var status: LinkStatus {
+        get { return LinkStatus(rawValue: _status)! }
+        set { _status = newValue.rawValue }
+    }
+    var isUpdating = false
+
+    convenience init(address: String) {
+        self.init()
         self.address = address
     }
+    
+    override static func primaryKey() -> String? {
+        return "address"
+    }
+    
+    override static func ignoredProperties() -> [String] {
+        return ["isUpdating"]
+    }
+    
+
 }
 
-extension Link: Hashable {
-    var hashValue: Int {
-        return address.hashValue
-    }
-}
-
-extension Link: Equatable {
-    static func == (lhs: Link, rhs: Link) -> Bool {
-        return lhs.address == rhs.address
-    }
-}
+//extension Link: Hashable {
+//    var hashValue: Int {
+//        return address.hashValue
+//    }
+//}
+//
+//extension Link: Equatable {
+//    static func == (lhs: Link, rhs: Link) -> Bool {
+//        return lhs.address == rhs.address
+//    }
+//}
 

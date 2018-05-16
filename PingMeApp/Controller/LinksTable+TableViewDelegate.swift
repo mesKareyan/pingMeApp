@@ -9,19 +9,7 @@
 import UIKit
 
 //MARK: - Table view
-extension LinksTableViewController: UITableViewDelegate, UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return isSearchingActive ? filteredLinks.count : linkStore.links.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "LinkTableViewCell") as! LinkTableViewCell
-        let link = isSearchingActive ?
-            filteredLinks[indexPath.row] : linkStore.links[indexPath.row]
-        cell.configure(for: link)
-        return cell
-    }
+extension LinksTableViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let cell = cell as! LinkTableViewCell
@@ -29,39 +17,36 @@ extension LinksTableViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     //MARK: Deleting
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == UITableViewCellEditingStyle.delete) {
-            let link = isSearchingActive ?
-                filteredLinks[indexPath.row] : linkStore.links[indexPath.row]
+            let link = linkStore.links[indexPath.row]
             showDeleteAlert(for: link, atIndex: indexPath.row)
         }
     }
     
-    func showDeleteAlert(for link: Link, atIndex: Int) {
-        let alert = UIAlertController(title: "Delete link for list",
-                                      message: "Are you sure?",
-                                      preferredStyle: .alert)
-        alert.addAction(
-            UIAlertAction(title: "Delete", style: .destructive, handler: { (action) in
-                //delete the link
-                if self.isSearchingActive {
-                    self.filteredLinks.remove(at: atIndex)
-                    self.tableView.deleteRows(at: [IndexPath(row: atIndex, section: 0)], with: .automatic)
-                    self.linkStore.remove(link: link)
-                } else {
-                    self.linkStore.remove(link: link)
-                    self.tableView.deleteRows(at: [IndexPath(row: atIndex, section: 0)], with: .automatic)
-                }
-            })
-        )
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        present(alert, animated: true, completion: nil)
-        
+    func indexPath(for link: Link) -> IndexPath? {
+        guard let linkIndex = self.linkStore.links.index(of: link) else { return nil }
+        return IndexPath(row: linkIndex, section: 0)
     }
+    
+    func insertCell(at newIndex: Int?) {
+        DispatchQueue.main.async {
+            guard let index = newIndex else { return }
+            let indexPath = IndexPath(row: index, section: 0)
+            self.tableView.insertRows(at: [indexPath], with: .automatic)
+        }
+    }
+    
+    func updateCell(for link: Link)  {
+        guard let indexPath = indexPath(for: link),
+            let _ = tableView.cellForRow(at: indexPath) as? LinkTableViewCell else  { return }
+        tableView.reloadRows(at: [indexPath], with: .automatic)
+    }
+    
     
 }
 

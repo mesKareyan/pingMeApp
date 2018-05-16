@@ -27,8 +27,8 @@ class LinkTableViewCell: UITableViewCell {
     func configure(for link: Link) {
         self.link = link
         descriptionLabel.text = link.address
-        if let pingTime = link.pingTime {
-            let pingInMS = String(format: "%.2fms", pingTime);
+        if link.pingTime != 0.0 {
+            let pingInMS = String(format: "%.2fms", link.pingTime);
             statusLabel.text = pingInMS;
         } else {
             statusLabel.text = ""
@@ -54,10 +54,19 @@ class LinkTableViewCell: UITableViewCell {
         switch link.status {
           case .available:
             statusView.backgroundColor = .green
+            self.finishLoading()
           case .unavailable:
             statusView.backgroundColor = .red
+            self.finishLoading()
           case .noInformation:
             statusView.backgroundColor = UIColor.groupTableViewBackground
+            self.finishLoading()
+        }
+        if link.isUpdating {
+            statusView.backgroundColor = UIColor.groupTableViewBackground
+            self.startLoading()
+        } else {
+            self.finishLoading()
         }
     }
     

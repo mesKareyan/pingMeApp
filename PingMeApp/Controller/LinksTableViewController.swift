@@ -7,15 +7,30 @@
 //
 
 import UIKit
+import RealmSwift
+
 
 class LinksTableViewController: UIViewController {
     
     let searchController = UISearchController(searchResultsController: nil)
     @IBOutlet weak var tableView: UITableView!
-    var linkStore: LinksStore!
-    var linkChecker: LinkChecker!
-    var filteredLinks: [Link] = []
-    var isSearchingActive = false {
+    
+    lazy var linkStore: LinksStore! = {
+        let linkStore = LinksStore()
+        return linkStore
+    }()
+    
+    lazy var linkChecker: LinkChecker! = {
+        let linkChecker = LinkChecker(store: linkStore)
+        return linkChecker
+    }()
+    
+    lazy var linksDataSource: LinksTableDataSource! = {
+        let dataSource = LinksTableDataSource(with: linkStore)
+        return dataSource
+    }()
+    
+    var searchPredicate: NSPredicate? = nil {
         didSet {
             self.tableView.reloadData()
         }
@@ -23,8 +38,8 @@ class LinksTableViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        linkStore = LinksStore()
-        linkChecker = LinkChecker()
+        tableView.delegate = self
+        tableView.dataSource = linksDataSource
         configureSearchBar()
         configureAppearance()
     }
@@ -63,6 +78,9 @@ class LinksTableViewController: UIViewController {
     }
     //MARK: - Actions
     @IBAction func refreshButtonTapped(_ sender: UIBarButtonItem) {
+        for link in linkStore.links {
+            updatePing(for: link)
+        }
     }
     
     @IBAction func addButtonTapped(_ sender: UIBarButtonItem) {
