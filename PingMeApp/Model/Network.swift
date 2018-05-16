@@ -21,7 +21,13 @@ typealias NetworkOperationCompletion = (NetworkResult) -> ()
 
 class Network {
     
-    static let session = URLSession.shared;
+    static let session =  { () -> URLSession in
+        let sessionConfig = URLSessionConfiguration.default
+        sessionConfig.timeoutIntervalForRequest = 30
+        sessionConfig.timeoutIntervalForResource = 30
+        let session = URLSession(configuration: sessionConfig)
+        return session
+    }()
     
     static func checkPing(for url: String, completion: @escaping NetworkOperationCompletion) {
         guard let url = URL(string: url) else {

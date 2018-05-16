@@ -14,6 +14,7 @@ extension LinksTableViewController: UISearchBarDelegate {
         //Show Cancel
         searchBar.setShowsCancelButton(true, animated: true)
         searchBar.tintColor = .white
+        self.coverView.isHidden = false
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -34,6 +35,7 @@ extension LinksTableViewController: UISearchBarDelegate {
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         //Hide Cancel
+        self.coverView.isHidden = true
         searchPredicate = nil
         searchBar.setShowsCancelButton(false, animated: true)
         searchBar.text = String()
@@ -50,19 +52,11 @@ extension LinksTableViewController: UISearchBarDelegate {
             searchPredicate = nil
             return
         }
-       searchPredicate = NSPredicate(format: "CONTAINS[c]", searchText)
+       searchPredicate = NSPredicate(format: "address contains[c] %@", searchText)
     }
     
 }
 
-//MARK: - Filtering
-extension LinksTableViewController {
-    
-    func filterLinks(for predicate: NSPredicate) {
-        
-    }
-    
-}
 
 
 

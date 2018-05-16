@@ -9,73 +9,55 @@
 import Foundation
 import RealmSwift
 
-enum LinksSorting {
-    
-    case nameAsc
-    case nameDesc
-    case statusAsc
-    case statusDesc
-    case pingTimeAsc
-    case pingTimeDesc
+enum LinksSortBy: String {
+    case address
+    case _status
+    case pingTime
     case none
-    
-    var value: String {
-        switch self {
-        case .nameAsc, .nameDesc :
-            return "address"
-        case .statusAsc, .statusDesc:
-            return "status"
-        case .pingTimeAsc, .pingTimeDesc:
-            return "ping"
-        case .none:
-            return ""
-        }
-    }
-    
-    var ascending: Bool {
-        switch self {
-        case .nameAsc, .statusAsc, .pingTimeAsc :
-            return true
-        case .nameDesc, .statusDesc, .pingTimeDesc:
-            return false
-        case .none:
-            return false
-        }
-    }
-    
 }
 
-extension LinksSorting {
-    static prefix func !(value: LinksSorting) -> LinksSorting {
-        switch value {
-        case .nameAsc:
-            return .nameDesc
-        case .nameDesc:
-            return .nameAsc
-        case .statusAsc:
-            return .statusDesc
-        case .statusDesc:
-            return .statusAsc
-        case .pingTimeAsc:
-            return .pingTimeDesc
-        case .pingTimeDesc:
-            return .pingTimeAsc
-        case .none:
-            return .none
+enum LinksOrderBy {
+    case ascending
+    case descending
+    var isAscending: Bool {
+        return self == .ascending
+    }
+    static prefix func !(order: LinksOrderBy) -> LinksOrderBy {
+        switch order {
+        case .ascending:
+            return .descending
+        case .descending:
+            return .ascending
         }
     }
 }
+
+enum NewLinkCreation {
+    case success(link: Link)
+    case fail
+}
+typealias NewLinkCreationCompletion = (NewLinkCreation) -> ()
 
 class LinksStore {
     
     private (set) var links: Results<Link>!
     let realm = try! Realm()
-    
+
     var searchPredicate: NSPredicate?
-    var sortBy: LinksSorting = .nameAsc
+    var sortBy: LinksSortBy = .pingTime
+    var odrerBy: LinksOrderBy = .ascending
 
     init() {
+        initialLoadingForLinks()
+    }
+    
+    func initialLoadingForLinks() {
         loadLinks()
+        for link in links {
+            if link.status == .updating {
+                update(link, status: .noInformation)
+            }
+        }
     }
     
     func loadLinks() {
@@ -95,7 +77,7 @@ class LinksStore {
             if sorted {
                return realm.objects(Link.self)
                       .filter(searchPredicate!)
-                      .sorted(byKeyPath: sortBy.value, ascending: sortBy.ascending)
+                      .sorted(byKeyPath: sortBy.rawValue, ascending: self.odrerBy.isAscending)
             } else {
                 return realm.objects(Link.self)
                     .filter(searchPredicate!)
@@ -103,27 +85,28 @@ class LinksStore {
         } else {
             if sorted {
                return realm.objects(Link.self)
-                    .sorted(byKeyPath: sortBy.value, ascending: sortBy.ascending)
+                    .sorted(byKeyPath: sortBy.rawValue, ascending: self.odrerBy.isAscending)
             } else {
                 return realm.objects(Link.self)
             }
         }
     }
     
-    func create(link address: String, index added: (Int?) ->()) {
+    //MARK: - CRUD
+    func create(link address: String, completion: NewLinkCreationCompletion) {
         do {
             let link = Link(address: address)
             try realm.write {
                 realm.add(link, update: true)
                 loadLinks()
-                guard let index = links.index(of: link) else {
-                    added(nil)
+                guard let _ = links.index(of: link) else {
+                    completion(.fail)
                     return
                 }
-                added(index)
+                completion(.success(link: link))
             }
         } catch let error as NSError {
-            added(nil)
+            completion(.fail)
             fatalError(error.localizedDescription)
         }
     }
@@ -143,10 +126,21 @@ class LinksStore {
             removed(nil)
         }
     }
-
-    func update(ping: TimeInterval, for link: Link) {
+    
+    func update(_ link: Link,status: LinkStatus,ping: TimeInterval = 0) {
         try! realm.write {
+            link.status = status
             link.pingTime = ping
+        }
+    }
+    
+    func updateAllLinks(completion: ()->()) {
+        try! realm.write {
+            for link in links {
+                link.status = .updating
+            }
+            //finsed updating
+            completion()
         }
     }
 
@@ -171,14 +165,16 @@ class LinkChecker {
     }
     
     private func updatePingResult(for link: Link, with result: NetworkResult) -> Bool {
+        
+        guard !link.isInvalidated else { return false }
+        
         switch result {
         case .failure(error: let error):
-            link.status = .unavailable
+            linkStore.update(link, status: .unavailable)
             print("Error: \(link)\n\(error)")
             return false
         case .success(pingTime: let ping):
-            link.status = .available
-            linkStore.update(ping: ping, for: link)
+            linkStore.update(link, status: .available, ping: ping)
             return true
         }
     }

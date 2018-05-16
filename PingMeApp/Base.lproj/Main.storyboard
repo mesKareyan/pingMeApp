@@ -32,17 +32,17 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="   " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="5" translatesAutoresizingMaskIntoConstraints="NO" id="2jd-Wl-abd">
-                                                    <rect key="frame" x="46" y="27" width="15.5" height="21"/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
+                                                    <rect key="frame" x="46" y="28" width="13.5" height="19"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="    " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="hDj-yK-AJA">
-                                                    <rect key="frame" x="310" y="27" width="50" height="21"/>
+                                                    <rect key="frame" x="310" y="28" width="50" height="19"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="50" id="hdN-NP-Jkb"/>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="hdN-NP-Jkb"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
                                                     <color key="textColor" red="1" green="0.57637232540000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -83,13 +83,43 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <view hidden="YES" opaque="NO" alpha="0.10000000000000001" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q4g-Bs-Kmb">
+                                <rect key="frame" x="0.0" y="116" width="375" height="551"/>
+                                <subviews>
+                                    <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O0m-a8-axJ">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.69999999999999996" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="hDu-WC-2Ju">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <color key="backgroundColor" name="systemBlueColor" catalog="System" colorSpace="catalog"/>
+                                        </view>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <blurEffect style="light"/>
+                                    </visualEffectView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstItem="O0m-a8-axJ" firstAttribute="leading" secondItem="Q4g-Bs-Kmb" secondAttribute="leading" id="TYk-vB-EVO"/>
+                                    <constraint firstAttribute="bottom" secondItem="O0m-a8-axJ" secondAttribute="bottom" id="fcK-Zo-jLQ"/>
+                                    <constraint firstItem="O0m-a8-axJ" firstAttribute="top" secondItem="Q4g-Bs-Kmb" secondAttribute="top" id="iaE-Mv-ACI"/>
+                                    <constraint firstAttribute="trailing" secondItem="O0m-a8-axJ" secondAttribute="trailing" id="wKc-CB-t1X"/>
+                                </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="6NL-is-cYs" appends="YES" id="4eS-Ee-u9i"/>
+                                </connections>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Q4g-Bs-Kmb" secondAttribute="bottom" id="F7b-87-sf7"/>
                             <constraint firstItem="DKl-Og-qZF" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="P6w-Rb-lEP"/>
                             <constraint firstItem="DKl-Og-qZF" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="azb-DP-HdW"/>
+                            <constraint firstItem="Q4g-Bs-Kmb" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="e07-wx-Mbe"/>
                             <constraint firstItem="DKl-Og-qZF" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="hch-cA-mPl"/>
                             <constraint firstItem="DKl-Og-qZF" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="kOu-0z-k6y"/>
+                            <constraint firstItem="Q4g-Bs-Kmb" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="t7M-pj-Hkr"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Q4g-Bs-Kmb" secondAttribute="trailing" id="tsC-GU-qLV"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -111,13 +141,27 @@
                                     <action selector="filterButtonTapped:" destination="BYZ-38-t0r" id="Xlz-SH-cOx"/>
                                 </connections>
                             </barButtonItem>
+                            <barButtonItem id="h4h-ll-BM8">
+                                <connections>
+                                    <action selector="oderButtonTapped:" destination="BYZ-38-t0r" id="BWr-2D-0up"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="coverView" destination="Q4g-Bs-Kmb" id="CTt-7V-Dtn"/>
+                        <outlet property="filterButton" destination="AbQ-XQ-jHR" id="SoW-t7-GGK"/>
+                        <outlet property="orderButton" destination="h4h-ll-BM8" id="Hrc-Ds-mXh"/>
+                        <outlet property="refreshButton" destination="Vwa-on-GmK" id="hys-hi-hxG"/>
                         <outlet property="tableView" destination="DKl-Og-qZF" id="Z7k-MU-mYj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer cancelsTouchesInView="NO" id="6NL-is-cYs">
+                    <connections>
+                        <action selector="coverViewTapped:" destination="BYZ-38-t0r" id="LZu-pG-mPM"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="863.20000000000005" y="130.88455772113943"/>
         </scene>

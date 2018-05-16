@@ -8,10 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		A957C63F5084EFDBB849CFAD /* Pods_PingMeApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B1FF46119454ECEB365F506 /* Pods_PingMeApp.framework */; };
+		B239095120ACA0BD0022A466 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B239095020ACA0BD0022A466 /* Assets.xcassets */; };
 		B257053D20A9DD7700214680 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B257053C20A9DD7700214680 /* AppDelegate.swift */; };
 		B257053F20A9DD7700214680 /* LinksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B257053E20A9DD7700214680 /* LinksTableViewController.swift */; };
 		B257054220A9DD7700214680 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B257054020A9DD7700214680 /* Main.storyboard */; };
-		B257054420A9DD7A00214680 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B257054320A9DD7A00214680 /* Assets.xcassets */; };
 		B257054720A9DD7A00214680 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B257054520A9DD7A00214680 /* LaunchScreen.storyboard */; };
 		B257055020A9DF7000214680 /* LinkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B257054F20A9DF7000214680 /* LinkTableViewCell.swift */; };
 		B29542FF20ABE9DD00783696 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29542FE20ABE9DD00783696 /* Network.swift */; };
@@ -26,11 +26,11 @@
 /* Begin PBXFileReference section */
 		3B1FF46119454ECEB365F506 /* Pods_PingMeApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PingMeApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		669E008D8F1B7788ACA9B490 /* Pods-PingMeApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PingMeApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PingMeApp/Pods-PingMeApp.debug.xcconfig"; sourceTree = "<group>"; };
+		B239095020ACA0BD0022A466 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B257053920A9DD7700214680 /* PingMeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PingMeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B257053C20A9DD7700214680 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B257053E20A9DD7700214680 /* LinksTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinksTableViewController.swift; sourceTree = "<group>"; };
 		B257054120A9DD7700214680 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		B257054320A9DD7A00214680 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B257054620A9DD7A00214680 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B257054820A9DD7A00214680 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B257054F20A9DF7000214680 /* LinkTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkTableViewCell.swift; sourceTree = "<group>"; };
@@ -127,7 +127,7 @@
 		B29542FD20AACC6400783696 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				B257054320A9DD7A00214680 /* Assets.xcassets */,
+				B239095020ACA0BD0022A466 /* Assets.xcassets */,
 				B257054520A9DD7A00214680 /* LaunchScreen.storyboard */,
 				B257054820A9DD7A00214680 /* Info.plist */,
 			);
@@ -205,7 +205,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B257054720A9DD7A00214680 /* LaunchScreen.storyboard in Resources */,
-				B257054420A9DD7A00214680 /* Assets.xcassets in Resources */,
+				B239095120ACA0BD0022A466 /* Assets.xcassets in Resources */,
 				B257054220A9DD7700214680 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

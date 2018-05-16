@@ -1,3 +1,4 @@
+
 //
 //  LinkTableViewCell.swift
 //  PingMeApp
@@ -28,7 +29,7 @@ class LinkTableViewCell: UITableViewCell {
         self.link = link
         descriptionLabel.text = link.address
         if link.pingTime != 0.0 {
-            let pingInMS = String(format: "%.2fms", link.pingTime);
+            let pingInMS = String(format: "%.3fms", link.pingTime);
             statusLabel.text = pingInMS;
         } else {
             statusLabel.text = ""
@@ -36,13 +37,13 @@ class LinkTableViewCell: UITableViewCell {
     }
     
     func startLoading() {
-        descriptionLabel.isHidden = true
+        statusLabel.isHidden = true
         spinner.isHidden = false
         spinner.startAnimating()
     }
     
     func finishLoading() {
-        descriptionLabel.isHidden = false
+        statusLabel.isHidden = false
         spinner.isHidden = true
         spinner.stopAnimating()
     }
@@ -61,12 +62,9 @@ class LinkTableViewCell: UITableViewCell {
           case .noInformation:
             statusView.backgroundColor = UIColor.groupTableViewBackground
             self.finishLoading()
-        }
-        if link.isUpdating {
+        case .updating:
             statusView.backgroundColor = UIColor.groupTableViewBackground
             self.startLoading()
-        } else {
-            self.finishLoading()
         }
     }
     

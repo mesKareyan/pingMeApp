@@ -13,6 +13,7 @@ enum LinkStatus: Int {
     case available
     case unavailable
     case noInformation
+    case updating
 }
 
 class Link: Object {
@@ -24,7 +25,6 @@ class Link: Object {
         get { return LinkStatus(rawValue: _status)! }
         set { _status = newValue.rawValue }
     }
-    var isUpdating = false
 
     convenience init(address: String) {
         self.init()
@@ -35,22 +35,6 @@ class Link: Object {
         return "address"
     }
     
-    override static func ignoredProperties() -> [String] {
-        return ["isUpdating"]
-    }
-    
 
 }
-
-//extension Link: Hashable {
-//    var hashValue: Int {
-//        return address.hashValue
-//    }
-//}
-//
-//extension Link: Equatable {
-//    static func == (lhs: Link, rhs: Link) -> Bool {
-//        return lhs.address == rhs.address
-//    }
-//}
 
