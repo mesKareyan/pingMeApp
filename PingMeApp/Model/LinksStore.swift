@@ -10,10 +10,10 @@ import Foundation
 
 class LinksStore {
     
-   private (set) var links: [Link] = [
-        Link(adress: "google.com"),
-        Link(adress: "facebook.com"),
-        Link(adress: "amzn.to")
+    private (set) var links: [Link] = [
+        Link(address: "google.com"),
+        Link(address: "facebook.com"),
+        Link(address: "amzn.to")
     ]
     
     func remove(link: Link) {
@@ -22,33 +22,39 @@ class LinksStore {
         }
     }
     
+    func add(link: Link) {
+        links.append(link)
+    }
+    
     init() {
     }
     
 }
 
-struct Link {
-    var adress: String
-    var status: LinkStatus = .noInformation
-    init(adress: String) {
-        self.adress = adress
+class LinkChecker {
+    
+    init() {}
+    
+    func updatePing(for link: Link, comletion: @escaping (_ success: Bool) -> ()) {
+        Network.checkPing(for: link.address) { (result) in
+        let success = self.updatePingResult(for: link, with: result)
+            DispatchQueue.main.async {
+                comletion(success)
+            }
+        }
     }
-}
-
-extension Link: Hashable {
-    var hashValue: Int {
-        return adress.hashValue
+    
+    private func updatePingResult(for link: Link, with result: NetworkResult) -> Bool {
+        switch result {
+        case .failure(error: let error):
+            link.status = .unavailable
+            print("Error: \(link)\n\(error)")
+            return false
+        case .success(pingTime: let ping):
+            link.status = .available
+            link.pingTime = ping
+            return true
+        }
     }
-}
-
-extension Link: Equatable {
-    static func == (lhs: Link, rhs: Link) -> Bool {
-        return lhs.adress == rhs.adress
-    }
-}
-
-enum LinkStatus {
-    case available
-    case unAvailable
-    case noInformation
+    
 }

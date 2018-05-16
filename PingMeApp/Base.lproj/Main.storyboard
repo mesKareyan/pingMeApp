@@ -31,14 +31,23 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="74.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2jd-Wl-abd">
-                                                    <rect key="frame" x="46" y="12" width="276" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="   " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="5" translatesAutoresizingMaskIntoConstraints="NO" id="2jd-Wl-abd">
+                                                    <rect key="frame" x="46" y="27" width="15.5" height="21"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="    " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="hDj-yK-AJA">
+                                                    <rect key="frame" x="310" y="27" width="50" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="50" id="hdN-NP-Jkb"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
+                                                    <color key="textColor" red="1" green="0.57637232540000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rsk-yQ-ExJ">
-                                                    <rect key="frame" x="16" y="11" width="22" height="22"/>
+                                                    <rect key="frame" x="16" y="26.5" width="22" height="22"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="22" id="G4B-ap-OTB"/>
@@ -46,7 +55,7 @@
                                                     </constraints>
                                                 </view>
                                                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="0Vu-Ya-0Re">
-                                                    <rect key="frame" x="330" y="11" width="22" height="22"/>
+                                                    <rect key="frame" x="330" y="26.5" width="22" height="22"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="22" id="Evg-g8-wfE"/>
                                                         <constraint firstAttribute="width" constant="22" id="Jl5-Gq-L3q"/>
@@ -54,18 +63,21 @@
                                                 </activityIndicatorView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="2jd-Wl-abd" firstAttribute="centerY" secondItem="uDH-O3-Qin" secondAttribute="centerY" id="0MC-a8-brC"/>
-                                                <constraint firstItem="2jd-Wl-abd" firstAttribute="leading" secondItem="Rsk-yQ-ExJ" secondAttribute="trailing" constant="8" id="4HV-Zc-0aw"/>
+                                                <constraint firstItem="2jd-Wl-abd" firstAttribute="leading" secondItem="Rsk-yQ-ExJ" secondAttribute="trailing" constant="8" id="Axb-hC-6IA"/>
+                                                <constraint firstItem="hDj-yK-AJA" firstAttribute="centerY" secondItem="uDH-O3-Qin" secondAttribute="centerY" id="KTz-kF-Alt"/>
+                                                <constraint firstItem="hDj-yK-AJA" firstAttribute="trailing" secondItem="uDH-O3-Qin" secondAttribute="trailingMargin" id="Ljv-HA-h1g"/>
+                                                <constraint firstItem="2jd-Wl-abd" firstAttribute="centerY" secondItem="uDH-O3-Qin" secondAttribute="centerY" id="NC1-8x-Odf"/>
                                                 <constraint firstItem="Rsk-yQ-ExJ" firstAttribute="centerY" secondItem="uDH-O3-Qin" secondAttribute="centerY" id="ON4-EK-7Di"/>
                                                 <constraint firstItem="Rsk-yQ-ExJ" firstAttribute="leading" secondItem="uDH-O3-Qin" secondAttribute="leading" constant="16" id="Own-nF-eLy"/>
-                                                <constraint firstItem="0Vu-Ya-0Re" firstAttribute="leading" secondItem="2jd-Wl-abd" secondAttribute="trailing" constant="8" id="gPp-1Q-qxH"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="0Vu-Ya-0Re" secondAttribute="trailing" constant="8" id="oDi-Qp-Ewi"/>
+                                                <constraint firstItem="hDj-yK-AJA" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="2jd-Wl-abd" secondAttribute="trailing" constant="8" id="rvP-6k-6Eo"/>
                                                 <constraint firstItem="0Vu-Ya-0Re" firstAttribute="centerY" secondItem="uDH-O3-Qin" secondAttribute="centerY" id="xwS-AA-5g7"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="descriptionLabel" destination="2jd-Wl-abd" id="edW-0N-bAm"/>
                                             <outlet property="spinner" destination="0Vu-Ya-0Re" id="dAt-EZ-jPY"/>
+                                            <outlet property="statusLabel" destination="hDj-yK-AJA" id="3cy-Vk-UAg"/>
                                             <outlet property="statusView" destination="Rsk-yQ-ExJ" id="Bfj-ol-3Ad"/>
                                         </connections>
                                     </tableViewCell>
@@ -87,10 +99,22 @@
                     </view>
                     <navigationItem key="navigationItem" id="jGl-fw-lVi">
                         <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" systemItem="refresh" id="Vwa-on-GmK"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="refresh" id="Vwa-on-GmK">
+                            <connections>
+                                <action selector="refreshButtonTapped:" destination="BYZ-38-t0r" id="yEU-CM-76G"/>
+                            </connections>
+                        </barButtonItem>
                         <rightBarButtonItems>
-                            <barButtonItem systemItem="add" id="T3f-lI-iKY"/>
-                            <barButtonItem title="Item" id="AbQ-XQ-jHR"/>
+                            <barButtonItem systemItem="add" id="T3f-lI-iKY">
+                                <connections>
+                                    <action selector="addButtonTapped:" destination="BYZ-38-t0r" id="UoH-gC-cG1"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="filter-icon" id="AbQ-XQ-jHR">
+                                <connections>
+                                    <action selector="filterButtonTapped:" destination="BYZ-38-t0r" id="Xlz-SH-cOx"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
@@ -99,7 +123,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="863.20000000000005" y="131.52709359605913"/>
+            <point key="canvasLocation" x="863.20000000000005" y="130.88455772113943"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ncL-eT-EAS">
@@ -121,4 +145,7 @@
             <point key="canvasLocation" x="-79.200000000000003" y="131.52709359605913"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="filter-icon" width="25" height="25"/>
+    </resources>
 </document>

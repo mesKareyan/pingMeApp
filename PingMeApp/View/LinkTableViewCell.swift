@@ -10,6 +10,7 @@ import UIKit
 
 class LinkTableViewCell: UITableViewCell {
     
+    @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var statusView: UIView!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
@@ -19,6 +20,31 @@ class LinkTableViewCell: UITableViewCell {
         super.awakeFromNib()
         statusView.layer.cornerRadius = statusView.bounds.width / 2
         statusView.clipsToBounds = true
+        spinner.isHidden = true
+        descriptionLabel.textColor = UIColor.lightGray
+    }
+    
+    func configure(for link: Link) {
+        self.link = link
+        descriptionLabel.text = link.address
+        if let pingTime = link.pingTime {
+            let pingInMS = String(format: "%.2fms", pingTime);
+            statusLabel.text = pingInMS;
+        } else {
+            statusLabel.text = ""
+        }
+    }
+    
+    func startLoading() {
+        descriptionLabel.isHidden = true
+        spinner.isHidden = false
+        spinner.startAnimating()
+    }
+    
+    func finishLoading() {
+        descriptionLabel.isHidden = false
+        spinner.isHidden = true
+        spinner.stopAnimating()
     }
     
     func updateCell() {
@@ -28,7 +54,7 @@ class LinkTableViewCell: UITableViewCell {
         switch link.status {
           case .available:
             statusView.backgroundColor = .green
-          case .unAvailable:
+          case .unavailable:
             statusView.backgroundColor = .red
           case .noInformation:
             statusView.backgroundColor = UIColor.groupTableViewBackground
